@@ -1,0 +1,11 @@
+id,product,category,revenue,units_sold,region,month
+1,Widget Pro,Electronics,12400,248,North America,October
+2,DataSync,Software,8900,89,Europe,October
+3,CloudBase,Infrastructure,21000,42,Asia Pacific,October
+4,Widget Pro,Electronics,13200,264,North America,November
+5,SmartDash,Analytics,5600,56,Europe,November
+6,DataSync,Software,9100,91,North America,November
+7,CloudBase,Infrastructure,19800,39,Asia Pacific,November
+8,Widget Pro,Electronics,14100,282,North America,December
+9,SmartDash,Analytics,6200,62,Europe,December
+10,DataSync,Software,10200,102,North America,December
