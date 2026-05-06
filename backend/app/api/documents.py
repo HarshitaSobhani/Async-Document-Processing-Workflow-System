@@ -192,3 +192,11 @@ def export(document_id: str, fmt: str, db: Session = Depends(get_db)):
         )
 
     raise HTTPException(400, "Invalid format. Use json or csv")
+
+@router.delete("/admin/clear-all")
+def clear_all_documents(db: Session = Depends(get_db)):
+    count = db.query(Document).count()
+    db.query(Document).delete()
+    db.commit()
+    return {"deleted": count, "message": f"Cleared {count} documents"}
+
