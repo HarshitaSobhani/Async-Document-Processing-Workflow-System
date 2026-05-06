@@ -2,7 +2,6 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system deps + Node.js + PostgreSQL + Redis
 RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql postgresql-contrib \
     redis-server \
@@ -13,8 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Python deps
-COPY backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+COPY backend/requirements.txt ./backend/requirements.txt
+RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Build Next.js static export
 COPY frontend/package*.json ./frontend/
@@ -25,11 +24,9 @@ ARG NEXT_PUBLIC_API_URL=/
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN cd frontend && npm run build
 
-# Copy built static files where FastAPI expects them
-RUN cp -r frontend/out backend/frontend_out
-
-# Copy backend
+# Copy backend FIRST, then copy static files into it
 COPY backend/ ./backend/
+RUN mkdir -p backend/frontend_out && cp -r frontend/out/. backend/frontend_out/
 
 RUN mkdir -p backend/uploads
 
